@@ -14,7 +14,7 @@ def run(rank, world_size):
 
     torch.manual_seed(0)
 
-    B, S, H, D = 2, 8, 4, 16  # small toy
+    B, S, H, D = 2, 20, 4, 16  # small toy
     q = torch.randn(B, S, H, D)
     k = torch.randn(B, S, H, D)
     v = torch.randn(B, S, H, D)
