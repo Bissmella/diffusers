@@ -1207,7 +1207,7 @@ class TemplatedRingAttention(torch.autograd.Function):
 
         grad_query, grad_key, grad_value = (x.to(grad_out.dtype) for x in (grad_query, grad_key, grad_value))
 
-        return grad_query, grad_key, grad_value, None, None, None, None, None, None, None, None
+        return grad_query, grad_key, grad_value, None, None, None, None, None, None, None, None, None
 
 
 class TemplatedUlyssesAttention(torch.autograd.Function):
@@ -1329,6 +1329,10 @@ def TemplatedUnifiedAttention(
     query = SeqAllToAllDim.apply(ulysses_group, query, scatter_idx, gather_idx)
     key = SeqAllToAllDim.apply(ulysses_group, key, scatter_idx, gather_idx)
     value = SeqAllToAllDim.apply(ulysses_group, value, scatter_idx, gather_idx)
+    print("+++ before ring attention: ")
+    print("query: ", query.shape)
+    print("key: ", key.shape)
+    print("vlaue: ", value.shape)
     out = TemplatedRingAttention.apply(
         query,
         key,
