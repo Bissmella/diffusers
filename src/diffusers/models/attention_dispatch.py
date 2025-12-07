@@ -1323,8 +1323,9 @@ def TemplatedUnifiedAttention(
     ring_mesh = _parallel_config.context_parallel_config._ring_mesh
     ring_group = ring_mesh.get_group()
     #hardcoded for now
-    scatter_idx = 1
-    gather_idx = 2
+    scatter_idx = 2
+    gather_idx = 1
+    world_size = _parallel_config.context_parallel_config.ulysses_degree * _parallel_config.context_parallel_config.ring_degree
 
     query = SeqAllToAllDim.apply(ulysses_group, query, scatter_idx, gather_idx)
     key = SeqAllToAllDim.apply(ulysses_group, key, scatter_idx, gather_idx)
@@ -1391,6 +1392,8 @@ def _templated_context_parallel_attention(
 
     # TODO: add support for unified attention with ring/ulysses degree both being > 1
     if _parallel_config.context_parallel_config.ring_degree > 1 and _parallel_config.context_parallel_config.ulysses_degree > 1:
+        print("ring degree: ", _parallel_config.context_parallel_config.ring_degree)
+        print("ulysses degree: ", _parallel_config.context_parallel_config.ulysses_degree)
         return TemplatedUnifiedAttention(
             query,
             key,
