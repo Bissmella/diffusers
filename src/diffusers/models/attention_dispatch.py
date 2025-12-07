@@ -1146,8 +1146,10 @@ class TemplatedRingAttention(torch.autograd.Function):
 
             lse = lse.unsqueeze(-1)
             if prev_out is not None:
+                print("inside the conditional")
                 out = prev_out - torch.nn.functional.sigmoid(lse - prev_lse) * (prev_out - out)
                 lse = prev_lse - torch.nn.functional.logsigmoid(prev_lse - lse)
+                print("after if calculation")
             prev_out = out
             prev_lse = lse
 
