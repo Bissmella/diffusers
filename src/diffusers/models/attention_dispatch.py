@@ -1101,6 +1101,9 @@ class TemplatedRingAttention(torch.autograd.Function):
         backward_op,
         _parallel_config: Optional["ParallelConfig"] = None,
     ):
+        print("ring init, query shape: ", query.shape)
+        print("ring init, key shape: ", key.shape)
+        print("ring init, value shape: ", value.shape)
         ring_mesh = _parallel_config.context_parallel_config._ring_mesh
         rank = _parallel_config.context_parallel_config._ring_local_rank
         world_size = _parallel_config.context_parallel_config.ring_degree
@@ -1147,6 +1150,10 @@ class TemplatedRingAttention(torch.autograd.Function):
             lse = lse.unsqueeze(-1)
             if prev_out is not None:
                 print("inside the conditional")
+                print("lse shp: ", lse.shape)
+                print("prev_lse shp: ", prev_lse.shape)
+                print("prev_out shp: ", prev_out.shape)
+                print("out shp: ", out.shape)
                 out = prev_out - torch.nn.functional.sigmoid(lse - prev_lse) * (prev_out - out)
                 lse = prev_lse - torch.nn.functional.logsigmoid(prev_lse - lse)
                 print("after if calculation")

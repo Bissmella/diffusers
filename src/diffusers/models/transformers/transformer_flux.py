@@ -114,7 +114,9 @@ class FluxAttnProcessor:
         if image_rotary_emb is not None:
             query = apply_rotary_emb(query, image_rotary_emb, sequence_dim=1)
             key = apply_rotary_emb(key, image_rotary_emb, sequence_dim=1)
-
+        print("flux prcssr, qery shape: ", query.shape)
+        print("flux prcssr, key shape: ", key.shape)
+        print("flux prcssr, value shape: ", value.shape)
         hidden_states = dispatch_attention_fn(
             query,
             key,
