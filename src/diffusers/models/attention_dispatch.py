@@ -1370,7 +1370,7 @@ def TemplatedUnifiedAttention(
         # not sure if this is correct: Assuming (based on forward ops in ringAttention) 
         # the lse is of shape (B, S, H_LOCAL)
         lse = lse.unsqueeze(-1)  # (B, S, H_LOCAL, 1)
-        lse = SeqAllToAllDim.apply(ulysses_group, lse, scatter_idx=2, gather_idx=1)
+        lse = SeqAllToAllDim.apply(ulysses_group, lse, gather_idx, scatter_idx)
         lse = lse.squeeze(-1)
         return (output, lse)
     return output
