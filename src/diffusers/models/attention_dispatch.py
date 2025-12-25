@@ -1214,7 +1214,7 @@ class TemplatedRingAttention(torch.autograd.Function):
 
         grad_query, grad_key, grad_value = (x.to(grad_out.dtype) for x in (grad_query, grad_key, grad_value))
 
-        return grad_query, grad_key, grad_value, None, None, None, None, None, None, None, None
+        return grad_query, grad_key, grad_value, None, None, None, None, None, None, None, None, None
 
 
 class TemplatedUlyssesAttention(torch.autograd.Function):
@@ -1309,7 +1309,7 @@ class TemplatedUlyssesAttention(torch.autograd.Function):
             x.flatten(0, 1).permute(1, 2, 0, 3).contiguous() for x in (grad_query, grad_key, grad_value)
         )
 
-        return grad_query, grad_key, grad_value, None, None, None, None, None, None, None, None
+        return grad_query, grad_key, grad_value, None, None, None, None, None, None, None, None, None
 
 def TemplatedUnifiedAttention(
     query: torch.Tensor,
